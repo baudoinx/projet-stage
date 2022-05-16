@@ -3,5 +3,15 @@
 {% block title %}Hello BienvenueController!{% endblock %}
 
 {% block body %}
-{{form(formulaire)}}
+<h1>Bienvenue </h1>
+<p>Veuillez choisir un mode de connexion</h1>
+<div position='center'>
+ <a href="https://www.facebook.com/">
+        <input type="button" value="Connexion Administrateur" class="btn btn-outline-success">
+    </a>
+    <br><br>
+    <a href="https://www.facebook.com/">
+        <input type="button" value="Connexion Enseignant" class="btn btn-outline-success">
+    </a>
+</div>
 {% endblock %}
