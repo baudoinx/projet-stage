@@ -9,7 +9,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class AdministrateurController extends AbstractController
 {
     /**
-     * @Route("/administrateur", name="app_administrateur")
+     * @Route("/administrateurconnexion", name="app_administrateur")
      */
     public function index(): Response
     {
