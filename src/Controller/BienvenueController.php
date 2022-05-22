@@ -7,7 +7,9 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 class BienvenueController extends AbstractController 
-{
+{ 
+    
+    
     /**
      * @Route("/", name="app_bienvenue", methods="GET")
      */
@@ -20,6 +22,10 @@ class BienvenueController extends AbstractController
            
         ]);
     }
+     /**
+     * @Route("/check", name="app_bienvenue", methods="GET")
+     */
+   
     
 
 }
