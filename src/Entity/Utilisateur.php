@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\UtilisateurRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
@@ -56,6 +58,22 @@ class Utilisateur implements UserInterface, PasswordAuthenticatedUserInterface
      * @ORM\Column(type="boolean")
      */
     private $isVerified = false;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Eleve::class, mappedBy="enseignant")
+     */
+    private $ideleves;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Pfmp::class, mappedBy="enseignant")
+     */
+    private $pfmps;
+
+    public function __construct()
+    {
+        $this->ideleves = new ArrayCollection();
+        $this->pfmps = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -190,6 +208,66 @@ class Utilisateur implements UserInterface, PasswordAuthenticatedUserInterface
     public function setIsVerified(bool $isVerified): self
     {
         $this->isVerified = $isVerified;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Eleve>
+     */
+    public function getIdeleves(): Collection
+    {
+        return $this->ideleves;
+    }
+
+    public function addIdelefe(Eleve $idelefe): self
+    {
+        if (!$this->ideleves->contains($idelefe)) {
+            $this->ideleves[] = $idelefe;
+            $idelefe->setEnseignant($this);
+        }
+
+        return $this;
+    }
+
+    public function removeIdelefe(Eleve $idelefe): self
+    {
+        if ($this->ideleves->removeElement($idelefe)) {
+            // set the owning side to null (unless already changed)
+            if ($idelefe->getEnseignant() === $this) {
+                $idelefe->setEnseignant(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Pfmp>
+     */
+    public function getPfmps(): Collection
+    {
+        return $this->pfmps;
+    }
+
+    public function addPfmp(Pfmp $pfmp): self
+    {
+        if (!$this->pfmps->contains($pfmp)) {
+            $this->pfmps[] = $pfmp;
+            $pfmp->setEnseignant($this);
+        }
+
+        return $this;
+    }
+
+    public function removePfmp(Pfmp $pfmp): self
+    {
+        if ($this->pfmps->removeElement($pfmp)) {
+            // set the owning side to null (unless already changed)
+            if ($pfmp->getEnseignant() === $this) {
+                $pfmp->setEnseignant(null);
+            }
+        }
 
         return $this;
     }

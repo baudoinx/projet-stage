@@ -22,6 +22,8 @@ class Classe
      */
     private $Libelle;
 
+   
+
     public function getId(): ?int
     {
         return $this->id;
@@ -38,4 +40,7 @@ class Classe
 
         return $this;
     }
+
+
+   
 }

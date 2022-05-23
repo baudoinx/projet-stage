@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\EleveRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -36,6 +38,38 @@ class Eleve
      * @ORM\Column(type="string", length=5)
      */
     private $promotion;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=utilisateur::class, inversedBy="ideleves")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $enseignant;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $tuteur;
+
+    /**
+     * @ORM\Column(type="string", length=20, nullable=true)
+     */
+    private $Specialite;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=formation::class, inversedBy="eleves")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $Formation;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Pfmp::class, mappedBy="Eleve")
+     */
+    private $pfmps;
+
+    public function __construct()
+    {
+        $this->pfmps = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -86,6 +120,84 @@ class Eleve
     public function setPromotion(string $promotion): self
     {
         $this->promotion = $promotion;
+
+        return $this;
+    }
+
+    public function getEnseignant(): ?utilisateur
+    {
+        return $this->enseignant;
+    }
+
+    public function setEnseignant(?utilisateur $enseignant): self
+    {
+        $this->enseignant = $enseignant;
+
+        return $this;
+    }
+
+    public function getTuteur(): ?string
+    {
+        return $this->tuteur;
+    }
+
+    public function setTuteur(string $tuteur): self
+    {
+        $this->tuteur = $tuteur;
+
+        return $this;
+    }
+
+    public function getSpecialite(): ?string
+    {
+        return $this->Specialite;
+    }
+
+    public function setSpecialite(?string $Specialite): self
+    {
+        $this->Specialite = $Specialite;
+
+        return $this;
+    }
+
+    public function getFormation(): ?formation
+    {
+        return $this->Formation;
+    }
+
+    public function setFormation(?formation $Formation): self
+    {
+        $this->Formation = $Formation;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Pfmp>
+     */
+    public function getPfmps(): Collection
+    {
+        return $this->pfmps;
+    }
+
+    public function addPfmp(Pfmp $pfmp): self
+    {
+        if (!$this->pfmps->contains($pfmp)) {
+            $this->pfmps[] = $pfmp;
+            $pfmp->setEleve($this);
+        }
+
+        return $this;
+    }
+
+    public function removePfmp(Pfmp $pfmp): self
+    {
+        if ($this->pfmps->removeElement($pfmp)) {
+            // set the owning side to null (unless already changed)
+            if ($pfmp->getEleve() === $this) {
+                $pfmp->setEleve(null);
+            }
+        }
 
         return $this;
     }
