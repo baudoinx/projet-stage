@@ -9,6 +9,9 @@
 width: 500px;
 margin: auto;
 text-align: center;
+background-color:0B4C5F;
+border: 10px;
+color: green;
 
 
 }
@@ -24,17 +27,26 @@ text-align: center;
 
     {{ form_start(registrationForm) }}
     <br>
-        {{ form_row(registrationForm.email) }}
+        
+         {{ form_row(registrationForm.Nom) }}
+         <br>
+         {{ form_row(registrationForm.prenom) }}
+         <br>
+         {{ form_row(registrationForm.type) }}
+         <br>
+         {{ form_row(registrationForm.email) }}
          <br>
         {{ form_row(registrationForm.plainPassword, {
             label: 'Mot de passe'
         }) }}
 
        
-    {{ form_end(registrationForm) }}
-     <br>
+    
+    <br>
+    <br>
      <button type="submit" class="btn btn-lg btn-primary">Enregistrer</button>
      </div>
+     {{ form_end(registrationForm) }}
 {% endblock %}
 </body>
 </html>
