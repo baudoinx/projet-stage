@@ -49,8 +49,7 @@ class UtilisateurAuthenticator extends AbstractLoginFormAuthenticator
             return new RedirectResponse($targetPath);
         }
 
-        // For example:
-        return new RedirectResponse($this->urlGenerator->generate('app_administrateur'));
+        return new RedirectResponse($this->urlGenerator->generate('admin_home'));
         throw new \Exception(' '.__FILE__);
     }
 

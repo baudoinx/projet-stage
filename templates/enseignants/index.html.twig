@@ -1,0 +1,44 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} Liste des Enseignants{% endblock %}
+
+
+{% block body %}
+<style>
+td,th{
+ border: solid 1px;
+    
+}
+table{
+    width: 80%;
+}
+a{
+    text-decoration: none;
+    color: black;
+}
+</style>
+    <h1> Liste des Enseignants </h1>
+
+    <table>
+    <tr>
+    <th>Id</th>
+    <th>Nom</th>
+    <th>Prenom</th>
+    <th>Adresse mail</th>
+    <th>Type</th>
+    </tr>
+        {% for Admin in Enseignants %}
+            <tr>
+                <td><a href="">{{ Admin.id }}</a></td>
+                <td><a href="">{{ Admin.nom }}</a></td>
+                <td><a href="">{{ Admin.prenom }}</a></td>
+                <td><a href="">{{ Admin.email }}</a></td>
+                <td><a href="">{{ Admin.roles }}</a></td>
+                
+            </tr>
+    
+    {% endfor %}
+    </table>
+    <a href="/register">
+    <button type=button> Ajouter un Admin</button></a>
+{% endblock %}

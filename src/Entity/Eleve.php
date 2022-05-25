@@ -43,7 +43,7 @@ class Eleve
      * @ORM\ManyToOne(targetEntity=utilisateur::class, inversedBy="ideleves")
      * @ORM\JoinColumn(nullable=false)
      */
-    private $enseignant;
+    private $Admin;
 
     /**
      * @ORM\Column(type="string", length=255)
@@ -54,22 +54,6 @@ class Eleve
      * @ORM\Column(type="string", length=20, nullable=true)
      */
     private $Specialite;
-
-    /**
-     * @ORM\ManyToOne(targetEntity=formation::class, inversedBy="eleves")
-     * @ORM\JoinColumn(nullable=false)
-     */
-    private $Formation;
-
-    /**
-     * @ORM\OneToMany(targetEntity=Pfmp::class, mappedBy="Eleve")
-     */
-    private $pfmps;
-
-    public function __construct()
-    {
-        $this->pfmps = new ArrayCollection();
-    }
 
     public function getId(): ?int
     {
@@ -124,14 +108,14 @@ class Eleve
         return $this;
     }
 
-    public function getEnseignant(): ?utilisateur
+    public function getAdmin(): ?utilisateur
     {
-        return $this->enseignant;
+        return $this->Admin;
     }
 
-    public function setEnseignant(?utilisateur $enseignant): self
+    public function setAdmin(?utilisateur $Admin): self
     {
-        $this->enseignant = $enseignant;
+        $this->Admin = $Admin;
 
         return $this;
     }
@@ -172,33 +156,5 @@ class Eleve
         return $this;
     }
 
-    /**
-     * @return Collection<int, Pfmp>
-     */
-    public function getPfmps(): Collection
-    {
-        return $this->pfmps;
-    }
-
-    public function addPfmp(Pfmp $pfmp): self
-    {
-        if (!$this->pfmps->contains($pfmp)) {
-            $this->pfmps[] = $pfmp;
-            $pfmp->setEleve($this);
-        }
-
-        return $this;
-    }
-
-    public function removePfmp(Pfmp $pfmp): self
-    {
-        if ($this->pfmps->removeElement($pfmp)) {
-            // set the owning side to null (unless already changed)
-            if ($pfmp->getEleve() === $this) {
-                $pfmp->setEleve(null);
-            }
-        }
-
-        return $this;
-    }
+    
 }

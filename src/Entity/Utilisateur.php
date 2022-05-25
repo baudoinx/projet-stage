@@ -49,31 +49,11 @@ class Utilisateur implements UserInterface, PasswordAuthenticatedUserInterface
      */
     private $prenom;
 
-    /**
-     * @ORM\Column(type="string", length=1)
-     */
-    private $type;
-
+ 
     /**
      * @ORM\Column(type="boolean")
      */
     private $isVerified = false;
-
-    /**
-     * @ORM\OneToMany(targetEntity=Eleve::class, mappedBy="enseignant")
-     */
-    private $ideleves;
-
-    /**
-     * @ORM\OneToMany(targetEntity=Pfmp::class, mappedBy="enseignant")
-     */
-    private $pfmps;
-
-    public function __construct()
-    {
-        $this->ideleves = new ArrayCollection();
-        $this->pfmps = new ArrayCollection();
-    }
 
     public function getId(): ?int
     {
@@ -115,11 +95,8 @@ class Utilisateur implements UserInterface, PasswordAuthenticatedUserInterface
      */
     public function getRoles(): array
     {
-        $roles = $this->roles;
-        // guarantee every user at least has ROLE_USER
-        $roles[] = 'ROLE_USER';
 
-        return array_unique($roles);
+        return array_unique($this->roles);
     }
 
     public function setRoles(array $roles): self
@@ -188,18 +165,6 @@ class Utilisateur implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    public function getType(): ?string
-    {
-        return $this->type;
-    }
-
-    public function setType(string $type): self
-    {
-        $this->type = $type;
-
-        return $this;
-    }
-
     public function isVerified(): bool
     {
         return $this->isVerified;
@@ -212,63 +177,4 @@ class Utilisateur implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    /**
-     * @return Collection<int, Eleve>
-     */
-    public function getIdeleves(): Collection
-    {
-        return $this->ideleves;
     }
-
-    public function addIdelefe(Eleve $idelefe): self
-    {
-        if (!$this->ideleves->contains($idelefe)) {
-            $this->ideleves[] = $idelefe;
-            $idelefe->setEnseignant($this);
-        }
-
-        return $this;
-    }
-
-    public function removeIdelefe(Eleve $idelefe): self
-    {
-        if ($this->ideleves->removeElement($idelefe)) {
-            // set the owning side to null (unless already changed)
-            if ($idelefe->getEnseignant() === $this) {
-                $idelefe->setEnseignant(null);
-            }
-        }
-
-        return $this;
-    }
-
-    /**
-     * @return Collection<int, Pfmp>
-     */
-    public function getPfmps(): Collection
-    {
-        return $this->pfmps;
-    }
-
-    public function addPfmp(Pfmp $pfmp): self
-    {
-        if (!$this->pfmps->contains($pfmp)) {
-            $this->pfmps[] = $pfmp;
-            $pfmp->setEnseignant($this);
-        }
-
-        return $this;
-    }
-
-    public function removePfmp(Pfmp $pfmp): self
-    {
-        if ($this->pfmps->removeElement($pfmp)) {
-            // set the owning side to null (unless already changed)
-            if ($pfmp->getEnseignant() === $this) {
-                $pfmp->setEnseignant(null);
-            }
-        }
-
-        return $this;
-    }
-}

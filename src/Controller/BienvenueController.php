@@ -22,9 +22,7 @@ class BienvenueController extends AbstractController
            
         ]);
     }
-     /**
-     * @Route("/check", name="app_bienvenue", methods="GET")
-     */
+    
    
     
 
