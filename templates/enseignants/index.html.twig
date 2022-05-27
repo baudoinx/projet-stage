@@ -1,44 +1,42 @@
 {% extends 'base.html.twig' %}
 
-{% block title %} Liste des Enseignants{% endblock %}
-
+{% block title %}Hello AdministrateurController!{% endblock %}
 
 {% block body %}
 <style>
-td,th{
- border: solid 1px;
-    
+    wrapper { margin:  auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif;
+display: grid;
+  grid-template-columns: auto auto auto;
+  background-color: #2196F3;
+  padding: 10px;
+ }
+ .btn{
+  border: 1px solid rgba(255, 255, 255, 0.8);
+  padding: 5%;
+  font-size: 30px;
+  text-align: center;
+  margin:50px;
+  text-decoration:none; 
+  min-width: 40%;
+  min-height: 50%;
+ background-color: #0B4C5F;
+ color: white;
+ border-radius: 5%;
 }
-table{
-    width: 80%;
+a {
+    text-decoration:none; 
 }
-a{
-    text-decoration: none;
-    color: black;
-}
-</style>
-    <h1> Liste des Enseignants </h1>
 
-    <table>
-    <tr>
-    <th>Id</th>
-    <th>Nom</th>
-    <th>Prenom</th>
-    <th>Adresse mail</th>
-    <th>Type</th>
-    </tr>
-        {% for Admin in Enseignants %}
-            <tr>
-                <td><a href="">{{ Admin.id }}</a></td>
-                <td><a href="">{{ Admin.nom }}</a></td>
-                <td><a href="">{{ Admin.prenom }}</a></td>
-                <td><a href="">{{ Admin.email }}</a></td>
-                <td><a href="">{{ Admin.roles }}</a></td>
-                
-            </tr>
-    
-    {% endfor %}
-    </table>
-    <a href="/register">
-    <button type=button> Ajouter un Admin</button></a>
+</style>
+
+<div class="wrapper">
+   <a href="/admin/listeadmin">
+  <button type="button" class="btn">Mes élèves</button> </a>
+   <a href="/admin/listeenseignants">
+  <button type="button" class="btn">Mon compte</button> </a>
+<a href="">
+  <button type="button" class="btn" >Se déconnecter</button> </a>
+  <a href="">
+  <button type="button" class="btn" >Noter un élève</button> </a>
+</div>
 {% endblock %}

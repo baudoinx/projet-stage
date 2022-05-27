@@ -48,8 +48,12 @@ class UtilisateurAuthenticator extends AbstractLoginFormAuthenticator
         if ($targetPath = $this->getTargetPath($request->getSession(), $firewallName)) {
             return new RedirectResponse($targetPath);
         }
-
-        return new RedirectResponse($this->urlGenerator->generate('admin_home'));
+        $user = $token->getUser();
+        if (in_array('ROLE_ADMIN', $user->getRoles(), true)) {
+            return new RedirectResponse($this->urlGenerator->generate('admin_home'));
+        }
+    
+       else return new RedirectResponse($this->urlGenerator->generate('app_Enseignant'));
         throw new \Exception(' '.__FILE__);
     }
 

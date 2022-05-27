@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %} Liste des Administrateurs{% endblock %}
+{% block title %} Liste des {{type}}{% endblock %}
 
 
 {% block body %}
@@ -25,7 +25,6 @@ a{
     <th>Nom</th>
     <th>Prenom</th>
     <th>Adresse mail</th>
-    <th>Type</th>
     </tr>
         {% for Admin in Admins %}
             <tr>
@@ -33,12 +32,16 @@ a{
                 <td><a href="">{{ Admin.nom }}</a></td>
                 <td><a href="">{{ Admin.prenom }}</a></td>
                 <td><a href="">{{ Admin.email }}</a></td>
-                <td><a href="">{{ Admin.roles }}</a></td>
                 
             </tr>
     
     {% endfor %}
     </table>
-    <a href="/register">
-    <button type=button> Ajouter un Admin</button></a>
+    {% if type == 'Administrateurs'%}
+    <a href="/admin/nouveladmin">
+    <button type=button> Ajouter un {{type}}</button></a>
+    {% else %}
+    <a href="/admin/nouvelenseignant">
+    <button type=button> Ajouter un {{type}}</button></a>
+    {% endif %}
 {% endblock %}

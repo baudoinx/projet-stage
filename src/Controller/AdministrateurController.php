@@ -3,9 +3,14 @@
 namespace App\Controller;
 
 use App\Entity\Utilisateur;
+use App\Form\RegistrationFormType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;    
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 class AdministrateurController extends AbstractController
 {
@@ -25,17 +30,11 @@ class AdministrateurController extends AbstractController
     {
      
         $repository = $this->getDoctrine()->getRepository( Utilisateur::class);
-        $Admin1 = $repository->findAll();
-        $Admins= array();
-        foreach( $Admin1 as $admin)
-        {
-            if($admin->getRoles()==["ADMIN_ROLE"])
-            array_push(Admins,admin);
-        }
-       
-        return $this->render('administrateur/liste.html.twig', [
+        $Admins = $repository->findBy(['type'=>'Admin']);
+       return $this->render('administrateur/liste.html.twig', [
             'controller_name' => 'AdminController',
             "Admins" => $Admins,
+            'type' => 'Administrateur'
         ]);
     
     }
@@ -43,8 +42,7 @@ class AdministrateurController extends AbstractController
      * @Route("/admin/nouveladmin", name="newteacher")
      */
     public function new(Request $request, UserPasswordHasherInterface $userPasswordHasher, EntityManagerInterface $entityManager): Response
-    {
-        $user = new Utilisateur();
+    { $user = new Utilisateur();
         $form = $this->createForm(RegistrationFormType::class, $user);
         $form->handleRequest($request);
 
@@ -55,18 +53,19 @@ class AdministrateurController extends AbstractController
                     $user,
                     $form->get('plainPassword')->getData()
                 )
-            
             );
-            user.setRoles(["ROLE_ADMIN"]);
-             $entityManager->persist($user);
+            $user->setRoles(["ROLE_ADMIN"]);
+            $user->setType("Admin");
+            $entityManager->persist($user);
             $entityManager->flush();
             // do anything else you need here, like send an email
 
             return $this->redirectToRoute('admin_home');
         }
 
-        return $this->render('administrateur/new.html.twig', [
+        return $this->render('registration/register.html.twig', [
             'registrationForm' => $form->createView(),
+            'type' => 'Administrateur'
         ]);
     }
     /**
@@ -76,11 +75,12 @@ class AdministrateurController extends AbstractController
     
     {
         $repository = $this->getDoctrine()->getRepository( Utilisateur::class);
-        $Admin = $repository->findUsersByRole(["ROLE_ENSEIGNANT"]);
+        $Admins = $repository->findBy(['type'=>'Enseignant']);
        
-        return $this->render('enseignants/index.html.twig', [
+        return $this->render('administrateur/liste.html.twig', [
             'controller_name' => 'AdminController',
-            "Enseignants" => $Admin,
+            "Admins" => $Admins,
+            'type' => 'Enseignant'
         ]);
     }
        /**
@@ -101,7 +101,8 @@ class AdministrateurController extends AbstractController
                 )
             
             );
-            user.setRoles(["ROLE_ENSEIGNANT"]);
+            $user->setRoles(["ROLE_ENSEIGNANT"]);
+            $user->setType("Enseignant");
              $entityManager->persist($user);
             $entityManager->flush();
             // do anything else you need here, like send an email
@@ -111,6 +112,7 @@ class AdministrateurController extends AbstractController
 
         return $this->render('enseignants/new.html.twig', [
             'registrationForm' => $form->createView(),
+            'type' => 'Enseignant'
         ]);
     }
 }

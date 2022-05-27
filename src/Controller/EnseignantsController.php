@@ -16,12 +16,9 @@ class EnseignantsController extends AbstractController
     public function index(): Response
     
     {
-        $repository = $this->getDoctrine()->getRepository( Utilisateur::class);
-           $Admin = $repository->findByfindUsersByRole(["ROLE_ENSEIGNANT"]);
-       
+      
         return $this->render('enseignants/index.html.twig', [
-            'controller_name' => 'AdminController',
-            "Enseignants" => $Admin,
+            'controller_name' => 'PageEnseignant',
         ]);
     }
   

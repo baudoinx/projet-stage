@@ -1,0 +1,34 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Register{% endblock %}
+
+{% block body %}
+<style>
+          div{
+width: 500px;
+margin: auto;
+text-align: center;
+background-color:0B4C5F;
+border: 10px;
+color: DodgerBlue;
+}
+</style>
+<div>
+    <h3>Ajouter un nouvel {{type}}</h3>
+   <br>
+    {{ form_start(registrationForm) }}
+    <br>
+        {{ form_row(registrationForm.email) }}
+        <br>
+        {{ form_row(registrationForm.plainPassword, {
+            label: 'Mot de passe'
+        }) }}
+        <br>
+        {{ form_row(registrationForm.Nom) }}
+         <br>
+         {{ form_row(registrationForm.prenom) }}
+         <br>
+        <button type="submit" class="btn btn-lg btn-primary">Ajouter</button>
+    {{ form_end(registrationForm) }}
+    </div>
+{% endblock %}
