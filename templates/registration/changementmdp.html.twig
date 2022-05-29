@@ -1,0 +1,28 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Changermdp{% endblock %}
+
+{% block body %}
+<style>
+          div{
+width: 500px;
+margin: auto;
+text-align: center;
+background-color:0B4C5F;
+border: 10px;
+color: DodgerBlue;
+}
+</style>
+<div>
+    <h3>Changer mon mot de passe </h3>
+   <br>
+    {{ form_start(registrationForm) }}
+    <br>
+        {{ form_row(registrationForm.plainPassword, {
+            label: 'Mot de passe'
+        }) }}
+        <br>
+        <button type="submit" class="btn btn-lg btn-primary">Ajouter</button>
+    {{ form_end(registrationForm) }}
+    </div>
+{% endblock %}

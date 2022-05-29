@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Utilisateur;
 use App\Form\RegistrationFormType;
+use App\Form\ChangementmdpType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -115,4 +116,45 @@ class AdministrateurController extends AbstractController
             'type' => 'Enseignant'
         ]);
     }
+    /**
+     * @Route("/admin/compte", name="admincompte")
+     */
+    public function compte(): Response
+    
+    {
+        return $this->render('administrateur/moncompte.html.twig', []);
+
+    }
+    /**
+     * @Route("/admin/{id}/changermdp", name="adminmdp")
+     */
+    public function changementmdp(Utilisateur $user, Request $request, UserPasswordHasherInterface $userPasswordHasher, EntityManagerInterface $entityManager): Response
+    
+    {
+        $form = $this->createForm(ChangementmdpType::class, $user);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            // encode the plain password
+            $user->setPassword(
+            $userPasswordHasher->hashPassword(
+                    $user,
+                    $form->get('plainPassword')->getData()
+                )
+            
+            );
+             $entityManager->persist($user);
+            $entityManager->flush();
+            // do anything else you need here, like send an email
+
+            return $this->redirectToRoute('admin_home');
+        }
+
+        return $this->render('registration/changementmdp.html.twig', [
+            'registrationForm' => $form->createView(),
+        ]);
+        return $this->render('administrateur/moncompte.html.twig', []);
+
+    }
+    
 }

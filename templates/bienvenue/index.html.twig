@@ -12,11 +12,34 @@ text-align: center;
 
 
 }
+ .logos{
+display: flex;
+  align-items: center;
+  height: 5%;
+  width: 80%;
+  margin-bottom: 20px;
+   }
+   .principal {
+       margin-left: 20%;
+      width: 10%;
+      height: 5%;
+   }
+   .secondaire {
+       margin-left: 40%;
+       width: 10%;
+       height: 5%;
+   }
 
         </style>
 </head>
 <body>
+
 {% block body %}
+  <div class="logos">
+    <img class="principal" src="{{'images/Logoglobal.png'}}">
+    <img class="secondaire" src="{{'images/logosectionhotel.png'}}">
+    </div>
+    <di class="contenaire">
 <h3>Bienvenue sur la plateforme de gestion des PFMP</h3>
 <br><br>
 
@@ -31,6 +54,6 @@ text-align: center;
         <input type="button" value="Se connecter en tant qu'Admin" class="btn btn-outline-success">
     </a>
 </div>
-
+</div>
 {% endblock %}
 </body>

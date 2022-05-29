@@ -1,0 +1,25 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} Les informations de mon compte {% endblock %}
+
+
+{% block body %}
+<style>
+td,th{
+ border: solid 1px;
+    
+}
+table{
+    width: 80%;
+}
+a{
+    text-decoration: none;
+    color: black;
+}
+</style>
+<br><br><br><br>
+    <p> Nom: {{app.user.nom}}</p><br>
+    <p> Prenom: {{app.user.prenom}}</p><br>
+    <p> Adresse mail: {{app.user.email}}</p><br>
+     <a href="/admin/{{app.user.id}}/changermdp"> <button class="btn btn-lg btn-primary">Changer mon mot de passe</button></a>
+{% endblock %}
