@@ -1,0 +1,49 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} Liste des élèves{% endblock %}
+
+
+{% block body %}
+<style>
+td,th,tr{
+ border: solid 1px;
+ text-allign: center;
+}
+table{
+    width: 80%;
+}
+a{
+    text-decoration: none;
+    color: black;
+}
+button{
+    background:rgb(36,255,255);
+}
+</style>
+    <h1>Liste des élèves</h1>
+
+    <table>
+    <tr>
+    <th>Nom</th>
+    <th>Prenom</th>
+    <th>Classe</th>
+    <th>Formation</th>
+    <th>Spécialité</th>
+    </tr>
+        {% for Eleve in Eleves %}
+            <tr>
+                <td><a href="">{{ Eleve.nom }}</a></td>
+                <td><a href="">{{ Eleve.prenom}}</a></td>
+                <td><a href="">{{ Eleve.classe }}</a></td>
+                <td><a href="">{{ Eleve.Formation }}</a></td>
+                <td><a href="">{{ Eleve.specialite }}</a></td>
+                <td><a href="/admin/{{Eleve.id}}/affecterenseignant"><button ">Affecter un enseignant</button></a></td>
+                <td><a href=""><button >Faire passer en classe supérieure</button></a></td>
+                
+            </tr>
+    
+    {% endfor %}
+    </table>
+    <br><br>
+     <a href="/admin/neweleveCAP"><button class="btn btn-lg btn-primary">Ajouter un nouvel Eleve</button></a>
+{% endblock %}

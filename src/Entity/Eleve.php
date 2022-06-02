@@ -29,10 +29,6 @@ class Eleve
      */
     private $prenom;
 
-    /**
-     * @ORM\Column(type="string", length=20)
-     */
-    private $classe;
 
     /**
      * @ORM\Column(type="string", length=5)
@@ -40,13 +36,13 @@ class Eleve
     private $promotion;
 
     /**
-     * @ORM\ManyToOne(targetEntity=utilisateur::class, inversedBy="ideleves")
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\ManyToOne(targetEntity=Utilisateur::class, inversedBy="ideleves")
+     * @ORM\JoinColumn(nullable=true)
      */
     private $Admin;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $tuteur;
 
@@ -54,6 +50,31 @@ class Eleve
      * @ORM\Column(type="string", length=20, nullable=true)
      */
     private $Specialite;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=Utilisateur::class, inversedBy="eleves")
+     */
+    private $Enseignant;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Cappfpmp::class, mappedBy="etudiant", cascade={"persist"})
+     */
+    private $cappfpmps;
+
+    /**
+     * @ORM\Column(type="string", length=10)
+     */
+    private $Classe;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $Formation;
+
+    public function __construct()
+    {
+        $this->cappfpmps = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -86,12 +107,12 @@ class Eleve
 
     public function getClasse(): ?string
     {
-        return $this->classe;
+        return $this->Classe;
     }
 
     public function setClasse(string $classe): self
     {
-        $this->classe = $classe;
+        $this->Classe = $classe;
 
         return $this;
     }
@@ -144,14 +165,56 @@ class Eleve
         return $this;
     }
 
-    public function getFormation(): ?formation
+    public function getFormation(): ?string
     {
         return $this->Formation;
     }
 
-    public function setFormation(?formation $Formation): self
+    public function setFormation(?string $Formation): self
     {
         $this->Formation = $Formation;
+
+        return $this;
+    }
+
+    public function getEnseignant(): ?Utilisateur
+    {
+        return $this->Enseignant;
+    }
+
+    public function setEnseignant(?Utilisateur $Enseignant): self
+    {
+        $this->Enseignant = $Enseignant;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Cappfpmp>
+     */
+    public function getCappfpmps(): Collection
+    {
+        return $this->cappfpmps;
+    }
+
+    public function addCappfpmp(Cappfpmp $cappfpmp): self
+    {
+        if (!$this->cappfpmps->contains($cappfpmp)) {
+            $this->cappfpmps[] = $cappfpmp;
+            $cappfpmp->setEtudiant($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCappfpmp(Cappfpmp $cappfpmp): self
+    {
+        if ($this->cappfpmps->removeElement($cappfpmp)) {
+            // set the owning side to null (unless already changed)
+            if ($cappfpmp->getEtudiant() === $this) {
+                $cappfpmp->setEtudiant(null);
+            }
+        }
 
         return $this;
     }

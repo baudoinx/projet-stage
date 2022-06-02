@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello AdministrateurController!{% endblock %}
+{% block title %}Noter eleve{% endblock %}
 
 {% block body %}
 <style>
@@ -30,12 +30,14 @@ a {
 </style>
 
 <div class="wrapper">
-   <a href="/enseignants/listeeleves">
-  <button type="button" class="btn">Mes élèves</button> </a>
-   <a href="/admin/listeenseignants">
-  <button type="button" class="btn">Mon compte</button> </a>
-<a href="">
-  <button type="button" class="btn" >Se déconnecter</button> </a>
+   <a href="/enseignant/{{pfpmp1.id}}/noterpfpmp">
+  <button type="button" class="btn">PFPM1</button> </a>
+   <a href="/enseignant/{{pfpmp2.id}}/noterpfpmp">
+    <button type="button" class="btn">PFPM2</button> </a>
+   <a href="/enseignant/{{pfpmp3.id}}/noterpfpmp">
+  <button type="button" class="btn">PFPM3</button> </a>
+   <a href="/enseignant/{{pfpmp4.id}}/noterpfpmp">
+     <button type="button" class="btn">PFPM4</button> </a>
   
 </div>
 {% endblock %}

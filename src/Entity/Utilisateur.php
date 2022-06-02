@@ -60,6 +60,16 @@ class Utilisateur implements UserInterface, PasswordAuthenticatedUserInterface
      */
     private $type;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Eleve::class, mappedBy="Enseignant")
+     */
+    private $eleves;
+
+    public function __construct()
+    {
+        $this->eleves = new ArrayCollection();
+    }
+
     public function getId(): ?int
     {
         return $this->id;
@@ -192,6 +202,40 @@ class Utilisateur implements UserInterface, PasswordAuthenticatedUserInterface
         $this->type = $type;
 
         return $this;
+    }
+
+    /**
+     * @return Collection<int, Eleve>
+     */
+    public function getEleves(): Collection
+    {
+        return $this->eleves;
+    }
+
+    public function addElefe(Eleve $elefe): self
+    {
+        if (!$this->eleves->contains($elefe)) {
+            $this->eleves[] = $elefe;
+            $elefe->setEnseignant($this);
+        }
+
+        return $this;
+    }
+
+    public function removeElefe(Eleve $elefe): self
+    {
+        if ($this->eleves->removeElement($elefe)) {
+            // set the owning side to null (unless already changed)
+            if ($elefe->getEnseignant() === $this) {
+                $elefe->setEnseignant(null);
+            }
+        }
+
+        return $this;
+    }
+    public function __toString(): ?string
+    {$retour=$this->Nom.'   '.$this->prenom;
+        return $retour;
     }
 
     }

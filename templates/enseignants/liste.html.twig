@@ -1,7 +1,6 @@
 {% extends 'base.html.twig' %}
 
-
-{% block title %} Liste des {{type}}{% endblock %}
+{% block title %} Liste de mes élèves{% endblock %}
 
 
 {% block body %}
@@ -25,27 +24,19 @@ a{
     <th>Id</th>
     <th>Nom</th>
     <th>Prenom</th>
-    <th>Adresse mail</th>
+    <th>Classe</th>
     </tr>
-        {% for Admin in Admins %}
+        {% for Admin in app.user.eleves %}
             <tr>
                 <td><a href="">{{ Admin.id }}</a></td>
                 <td><a href="">{{ Admin.nom }}</a></td>
                 <td><a href="">{{ Admin.prenom }}</a></td>
-                <td><a href="">{{ Admin.email }}</a></td>
+                <td><a href="">{{ Admin.classe }}</a></td>
+                <td><a href="">{{ Admin.formation}}</a></td>
+                <td><a href="/enseignants/noterelevecap/{{Admin.id}}"><button class="btn btn-lg btn-primary">Noter</button></a></td>
                 
             </tr>
     
     {% endfor %}
     </table>
-    <br>
-    <br>
-    <br>
-    {% if type == 'Administrateurs'%}
-    <a href="/admin/nouveladmin">
-    <button type=button> Ajouter un {{type}}</button></a>
-    {% else %}
-    <a href="/admin/nouvelenseignant">
-    <button type=button> Ajouter un {{type}}</button></a>
-    {% endif %}
 {% endblock %}
